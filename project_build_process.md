@@ -17,3 +17,8 @@
     - created Proje_instruction markdown file for the project guideline
     - created Project_build_process markdown file for documenting thought building proces
     - created a git repository for the project https://github.com/mrchukwu/students_record_api
+
+### Setting up MongoDB database
+
+- Setup a database
+- Created a cluster ( cluster password : jOsLQX0mBf3CQxtx)
