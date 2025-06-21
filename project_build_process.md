@@ -22,3 +22,5 @@
 
 - Setup a database
 - Created a cluster ( cluster password : jOsLQX0mBf3CQxtx)
+- Created a config directory and created a database file for MongoDB database connection
+- created the app.js project entry execution file
