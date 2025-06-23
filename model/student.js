@@ -20,6 +20,11 @@ const studentSchema = mongoose.Schema(
             trim: true
         },
 
+        age: {
+            type: Number,
+            required: true
+        },
+
         email: {
             type: String,
             lowercase: true,
@@ -33,9 +38,15 @@ const studentSchema = mongoose.Schema(
             }
         },
 
-        age: {
-            type: Number,
-            required: true
+        password:{
+            type: String,
+            minLength: 4,
+            required: [true, "Password is required"],
+            validator(value){
+                if(!validator.isStrongPassword(value)){
+                    throw new Error("please enter a strong password")
+                }
+            }
         }
     }
 )
