@@ -1,22 +1,23 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
-const {validateStudentData} = require("./utills/validation");
+const { validateStudentData } = require("./utills/authValidation");
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 const authRouter = require("./routes/authRoute");
 
-app.use("/", authRouter)
-
+app.use("/", authRouter);
 
 connectDB()
-.then(() => {
-  console.log("Database connection established...");
-  app.listen(3001, () => {
-    console.log("server running on port 3001")
+  .then(() => {
+    console.log("Database connection established...");
+    app.listen(3001, () => {
+      console.log("server running on port 3001");
+    });
   })
-}).catch(err => {
-  console.log("Database connection falied: " + err.message);
-})
-
+  .catch((err) => {
+    console.log("Database connection falied: " + err.message);
+  });
