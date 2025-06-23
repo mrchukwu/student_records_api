@@ -25,15 +25,6 @@ const validateStundentLoginData = async (req, res) => {
   }
 };
 
-// const validatePassword = async function(passwordInputByStudent){
-
-//         const stundent = this;
-//         const passwordHashed =  stundent.password;
-//         const isPasswordValid = bcrypt.compare(passwordInputByStudent, passwordHashed);
-
-//         return isPasswordValid;
-
-// }
 
 module.exports = {
   validateStudentSignupData,

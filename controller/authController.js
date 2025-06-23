@@ -6,6 +6,7 @@ const {
   validateStundentLoginData
 } = require("../utills/authValidation");
 
+
 const signupController = async (req, res) => {
   try {
     validateStudentSignupData(req);
@@ -46,7 +47,7 @@ const loginController = async (req, res) => {
   try {
     validateStundentLoginData(req);
     console.log(req.body);
-    const { _id, email, password } = req.body;
+    const { email, password } = req.body;
 
     const student = await Student.findOne({ email: email });
     if (!student) {
@@ -56,7 +57,7 @@ const loginController = async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(password, student.password);
     if (isPasswordValid) {
-      const token = jwt.sign({ _id: _id }, "TechyJauntProject$12", {
+      const token = jwt.sign({ _id: student._id }, "TechyJauntProject$12", {
         expiresIn: "7d",
       });
       res.cookie("token", token, {expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)});

@@ -16,6 +16,8 @@ lastName (string)
 
 email (string, must be unique)
 
+password : added for authentication 
+
 age (integer)
 
 
