@@ -33,7 +33,7 @@ const signupController = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Student created",
-      "student-data": student,
+      data : student,
     });
   } catch (err) {
     res.status(401).json({
@@ -65,7 +65,7 @@ const loginController = async (req, res) => {
       res.status(200).json({
         status: "success",
         message: "Stundent loggedin",
-        "student-data": student
+        data : student
       })
     }else{
         res.send("Invalid credential")
