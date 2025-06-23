@@ -27,12 +27,12 @@
 
 ### Authentication
 
-- Signup created 
-    - Student's can signup : create account
-        - fileds required : firstname, lastname, email, age
-        - firstname and lastname field cannot be empty string ("") or null
-        - email must be a valid email. Check passed on email with Validator npm package
-        - password must be a str
-        - age must be a number.
-    - Student's can login
-    - 
+- Student's can signup : create account
+    - fileds required : firstname, lastname, email, age
+    - firstname and lastname field cannot be empty string ("") or null
+    - email must be a valid email. Check passed on email with Validator npm package
+    - password must be a str
+    - age must be a number.
+- Student's can login: Access their account
+    - Student can access all other enpoints only if they are logged in.
+    
