@@ -1,7 +1,6 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
-const { validateStudentData } = require("./utills/authValidation");
 
 const app = express();
 app.use(express.json());
@@ -12,6 +11,7 @@ const studentRouter = require("./routes/studentRoute");
 
 app.use("/", authRouter);
 app.use("/", studentRouter);
+
 
 connectDB()
   .then(() => {

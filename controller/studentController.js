@@ -1,9 +1,9 @@
 
 const Student = require("../model/student");
+const { validateStudentEditData } = require("../utills/validation");
 
 const allStudentsController = async(req, res) => {
     try{
-
         const loggedInUser = req.user;
         if(!loggedInUser){
             throw new Error("Student not loggedin");
@@ -15,7 +15,6 @@ const allStudentsController = async(req, res) => {
 
         const totalStudents = await Student.countDocuments();
         const allStundents = await Student.find({}).skip(skip).limit(limit);
-        console.log(allStundents)
 
         res.status(200).json({
             status: "success",
@@ -48,7 +47,30 @@ const allStudentsController = async(req, res) => {
     }
  }
 
+ const studentUpdateController = async(req, res) => {
+    try{
+        validateStudentEditData(req)
+        
+        const loggedinUser = req.user;
+        console.log(loggedinUser)
+
+        Object.keys(req.body).forEach((key) => (loggedinUser[key] = req.body[key]));
+
+        await loggedinUser.save();
+
+        res.send({
+            status: "success",
+            message: `${loggedinUser.firstName} profile updated sucessfully`,
+            data: loggedinUser,
+          });
+
+    }catch(err){
+        res.status(400).send("ERROR: " + err.message);
+    }
+ }
+
 module.exports = {
     allStudentsController,
-    studentController
+    studentController,
+    studentUpdateController
 }

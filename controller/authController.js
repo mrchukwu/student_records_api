@@ -4,7 +4,7 @@ const Student = require("../model/student");
 const {
   validateStudentSignupData,
   validateStundentLoginData
-} = require("../utills/authValidation");
+} = require("../utills/validation");
 
 
 const signupController = async (req, res) => {
@@ -46,14 +46,14 @@ const signupController = async (req, res) => {
 const loginController = async (req, res) => {
   try {
     validateStundentLoginData(req);
-    console.log(req.body);
+
     const { email, password } = req.body;
 
     const student = await Student.findOne({ email: email });
     if (!student) {
       throw new Error("Invalid credential");
     }
-    console.log(student);
+
 
     const isPasswordValid = await bcrypt.compare(password, student.password);
     if (isPasswordValid) {

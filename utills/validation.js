@@ -25,8 +25,34 @@ const validateStundentLoginData = async (req, res) => {
   }
 };
 
+const validateStudentEditData = async(req, res) => {
+  const allowedEditFields = ["firstname", "lastname", "age"];
+  const { firstname, lastname, password, age } = req.body;
+
+  const isEditAllowed = Object.keys(req.body).every(field =>
+    allowedEditFields.includes(field)
+  );
+  if(!isEditAllowed){
+    throw new Error("Request contains invalid fields");
+  }
+
+  if (firstname !== undefined && typeof firstname !== "string") {
+    throw new Error("Firstname is not valid");
+  }
+
+  if (lastname !== undefined && typeof lastname !== "string") {
+    throw new Error("Lastname is not valid");
+  }
+
+  if (age !== undefined && isNaN(age)) {
+    throw new Error("Invalid age");
+  }
+
+  return true;
+}
 
 module.exports = {
   validateStudentSignupData,
-  validateStundentLoginData
+  validateStundentLoginData,
+  validateStudentEditData
 };

@@ -10,12 +10,10 @@ const auth = async(req, res, next) => {
         }
 
         const decodedObj = await jwt.verify(token, "TechyJauntProject$12");
-        console.log("verifyToken: ", decodedObj)
 
         const {_id} = decodedObj
 
         const user = await Student.findById(_id);
-        console.log("desctructured token id: ",  _id)
 
         if(!user){
             throw new Error("Invalid token or student not found");
