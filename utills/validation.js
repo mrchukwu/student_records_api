@@ -26,8 +26,9 @@ const validateStundentLoginData = async (req, res) => {
 };
 
 const validateStudentEditData = async(req, res) => {
-  const allowedEditFields = ["firstname", "lastname", "age"];
-  const { firstname, lastname, password, age } = req.body;
+  const allowedEditFields = ["firstname", "lastname", "age", "status"];
+  const { firstname, lastname, password, age, status} = req.body; 
+
 
   const isEditAllowed = Object.keys(req.body).every(field =>
     allowedEditFields.includes(field)
@@ -44,8 +45,19 @@ const validateStudentEditData = async(req, res) => {
     throw new Error("Lastname is not valid");
   }
 
+  if (password !== undefined && !validator.isStrongPassword(password)) {
+    throw new Error("Password is not strong. Must contain uppercase, lowercase, number, and be at least 5 characters long");
+  }
+
   if (age !== undefined && isNaN(age)) {
     throw new Error("Invalid age");
+  }
+
+  if (
+    status !== undefined &&
+    (typeof status !== "string" || !["present", "absent", "suspended", "expelled"].includes(status.toLowerCase()))
+  ) {
+    throw new Error("Invalid status value. Allowed: present, absent, suspended, expelled");
   }
 
   return true;

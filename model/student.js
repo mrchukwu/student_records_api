@@ -52,7 +52,11 @@ const studentSchema = mongoose.Schema(
 
         status: {
             type: String,
-            enum: ["present", "absent", "suspended", "expelled"],
+            lowercase: true,
+            enum: {
+                values: ["present", "absent", "suspended", "expelled"],
+                message: `{VALUE} is no a valid status`
+            },
             default: "present"
         }
     }
