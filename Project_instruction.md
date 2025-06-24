@@ -1,4 +1,4 @@
-# STUDENTS RECORD
+# STUDENT RECORDS
 
 ## Backend CRUD Application Challenge (MongoDB)
 - Objective:

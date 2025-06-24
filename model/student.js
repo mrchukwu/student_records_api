@@ -48,6 +48,12 @@ const studentSchema = mongoose.Schema(
                     throw new Error("please enter a strong password")
                 }
             }
+        },
+
+        status: {
+            type: String,
+            enum: ["present", "absent", "suspended", "expelled"],
+            default: "present"
         }
     }
 )
