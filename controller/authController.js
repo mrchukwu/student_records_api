@@ -3,9 +3,8 @@ const jwt = require("jsonwebtoken");
 const Student = require("../model/student");
 const {
   validateStudentSignupData,
-  validateStundentLoginData
+  validateStundentLoginData,
 } = require("../utills/validation");
-
 
 const signupController = async (req, res) => {
   try {
@@ -33,7 +32,7 @@ const signupController = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "Student created",
-      data : student,
+      data: student,
     });
   } catch (err) {
     res.status(401).json({
@@ -54,21 +53,22 @@ const loginController = async (req, res) => {
       throw new Error("Invalid credential");
     }
 
-
     const isPasswordValid = await bcrypt.compare(password, student.password);
     if (isPasswordValid) {
       const token = jwt.sign({ _id: student._id }, "TechyJauntProject$12", {
         expiresIn: "7d",
       });
-      res.cookie("token", token, {expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)});
+      res.cookie("token", token, {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
 
       res.status(200).json({
         status: "success",
         message: "Stundent loggedin",
-        data : student
-      })
-    }else{
-        res.send("Invalid credential")
+        data: student,
+      });
+    } else {
+      res.status(404).json({ message: "ERROR: " + err.message });
     }
   } catch (err) {
     res.status(401).json({
@@ -80,5 +80,5 @@ const loginController = async (req, res) => {
 
 module.exports = {
   signupController,
-  loginController
+  loginController,
 };

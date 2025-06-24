@@ -9,7 +9,10 @@
     - POST /login - input fields : {email, password}
 
 - Student routes
-    - GET /students - Gets all the registered students
+    - GET /students - Gets all the registered students.
+    - GET /students?page=1 - Pagination query
     - GET /students/:id - Gets a student by ID
     - PATCH /students/:id - Updates a student by ID
+    - PATCH /students/:id/password - Updates students password
+    - DEL /students/:id - Deletes a student by ID
 

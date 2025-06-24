@@ -45,9 +45,11 @@
 ## STEP 4
 
 - Student routes:
+    - Create Student Schema
     - Get all students
     - Get the total number of students
-    - Get students by status [present, absent, suspended, expelled] (new feature)
+    - Get the total number of students by status [present, absent, suspended, expelled] (new feature)
     - Get an individual student
     - Update a student
+    - Update Student password
     - Delete a student

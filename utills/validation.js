@@ -1,7 +1,7 @@
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 
-const validateStudentSignupData = async (req) => {
+const validateStudentSignupData = (req) => {
   const { firstname, lastname, email, password, age } = req.body;
 
   if (!firstname || !lastname) {
@@ -15,7 +15,7 @@ const validateStudentSignupData = async (req) => {
   }
 };
 
-const validateStundentLoginData = async (req, res) => {
+const validateStundentLoginData = (req) => {
   const { email, password } = req.body;
 
   if (!email) {
@@ -25,9 +25,9 @@ const validateStundentLoginData = async (req, res) => {
   }
 };
 
-const validateStudentEditData = async(req, res) => {
+const validateStudentEditData = (req) => {
   const allowedEditFields = ["firstname", "lastname", "age", "status"];
-  const { firstname, lastname, password, age, status} = req.body; 
+  const { firstname, lastname, age, status} = req.body; 
 
 
   const isEditAllowed = Object.keys(req.body).every(field =>
@@ -45,9 +45,9 @@ const validateStudentEditData = async(req, res) => {
     throw new Error("Lastname is not valid");
   }
 
-  if (password !== undefined && !validator.isStrongPassword(password)) {
-    throw new Error("Password is not strong. Must contain uppercase, lowercase, number, and be at least 5 characters long");
-  }
+  // if (password !== undefined && !validator.isStrongPassword(password)) {
+  //   throw new Error("Password is not strong. Must contain uppercase, lowercase, number, and be at least 5 characters long");
+  // }
 
   if (age !== undefined && isNaN(age)) {
     throw new Error("Invalid age");
@@ -61,10 +61,25 @@ const validateStudentEditData = async(req, res) => {
   }
 
   return true;
+};
+
+const validateStudentUpdatePassword = (req) => {
+
+  const {oldPassword, newPassword} = req.body;
+
+  if(!oldPassword || !newPassword ){
+    throw new Error("Invalid credentials")
+  }
+
+  if (!validator.isStrongPassword(newPassword)) {
+    throw new Error("New password is not strong enough. Use a strong password with 1 Uppercase letters, lowercase letters, symbols, numbers, etc.");
+  }
+
 }
 
 module.exports = {
   validateStudentSignupData,
   validateStundentLoginData,
-  validateStudentEditData
+  validateStudentEditData,
+  validateStudentUpdatePassword
 };

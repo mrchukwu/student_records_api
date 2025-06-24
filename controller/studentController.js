@@ -1,5 +1,9 @@
+const bcrypt = require("bcrypt");
 const Student = require("../model/student");
-const { validateStudentEditData } = require("../utills/validation");
+const {
+  validateStudentEditData,
+  validateStudentUpdatePassword,
+} = require("../utills/validation");
 
 const allStudentsController = async (req, res) => {
   try {
@@ -15,7 +19,8 @@ const allStudentsController = async (req, res) => {
     const students = await Student.find({}).skip(skip).limit(limit);
 
     const totalStudents = await Student.countDocuments();
-    const presentCount = await Student.countDocuments({ status: "present" }) || 0;
+    const presentCount =
+      (await Student.countDocuments({ status: "present" })) || 0;
     const absentCount = await Student.countDocuments({ status: "absent" });
     const suspendedCount = await Student.countDocuments({
       status: "suspended",
@@ -77,7 +82,7 @@ const studentUpdateController = async (req, res) => {
 
     res.send({
       status: "success",
-      message: `${loggedinUser.firstName} profile updated sucessfully`,
+      message: `${loggedinUser.firstname} profile updated sucessfully`,
       data: loggedinUser,
     });
   } catch (err) {
@@ -85,8 +90,44 @@ const studentUpdateController = async (req, res) => {
   }
 };
 
+const studentUpdatePasswordController = async (req, res) => {
+  try {
+    validateStudentUpdatePassword(req);
+
+    const { oldPassword, newPassword } = req.body;
+    const loggedInStudent = req.user;
+    console.log(loggedInStudent);
+
+    if (!loggedInStudent.password) {
+      throw new Error("Student password not found");
+    }
+
+    const passwordIsAMatch = await bcrypt.compare(
+      oldPassword,
+      loggedInStudent.password,
+    );
+    if (!passwordIsAMatch) {
+      throw new Error("Password incorrect");
+    }
+
+    const hashNewPassword = await bcrypt.hash(newPassword, 10);
+
+    loggedInStudent.password = hashNewPassword;
+    await loggedInStudent.save();
+
+    res.status(200).json({
+      status: "success",
+      message: `${loggedInStudent.firstname} updated password successfully`,
+      data: loggedInStudent,
+    });
+  } catch (err) {
+    res.status(404).json({ message: "ERROR: " + err.message });
+  }
+};
+
 const studentDeleteController = async (req, res) => {
   try {
+    res.send("Student deleted...");
   } catch (err) {}
 };
 
@@ -94,4 +135,6 @@ module.exports = {
   allStudentsController,
   studentController,
   studentUpdateController,
+  studentUpdatePasswordController,
+  studentDeleteController,
 };
