@@ -28,7 +28,7 @@
 
 ## Getting Started
 
-    ### Prerequisites
+    Prerequisites
 
         - Node.js (v14 or later)
         - MongoDB (v4 or later)

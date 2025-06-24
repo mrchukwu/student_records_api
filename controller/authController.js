@@ -68,12 +68,30 @@ const loginController = async (req, res) => {
         data: student,
       });
     } else {
-      res.status(404).json({ message: "ERROR: " + err.message });
+      res.status(401).json({
+        status: "failed",
+        message: "Invalid credentials",
+      });
     }
   } catch (err) {
     res.status(401).json({
       status: "failed",
-      message: "error: " + err.message,
+      message: "ERROR: " + err.message,
+    });
+  }
+};
+
+const logoutController = async (req, res) => {
+  try {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+    });
+    res.json({
+      message: "Logged out successfully",
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "ERROR: " + err.message,
     });
   }
 };
@@ -81,4 +99,5 @@ const loginController = async (req, res) => {
 module.exports = {
   signupController,
   loginController,
+  logoutController,
 };
