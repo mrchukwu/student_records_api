@@ -1,6 +1,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 const connectDB = require("./config/database");
+
 
 const app = express();
 app.use(express.json());
@@ -13,10 +15,11 @@ app.use("/", authRouter);
 app.use("/", studentRouter);
 
 
+const PORT = process.env.PORT || 3001;
 connectDB()
   .then(() => {
     console.log("Database connection established...");
-    app.listen(3001, () => {
+    app.listen(PORT, () => {
       console.log("server running on port 3001");
     });
   })
