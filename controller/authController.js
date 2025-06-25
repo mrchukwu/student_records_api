@@ -29,13 +29,13 @@ const signupController = async (req, res) => {
 
     await student.save();
 
-    res.status(200).json({
+    res.status(201).json({
       status: "success",
       message: "Student created",
       data: student,
     });
   } catch (err) {
-    res.status(401).json({
+    res.status(400).json({
       status: "failed",
       message: "erorr: " + err.message,
     });

@@ -59,7 +59,7 @@ const studentController = async (req, res) => {
       throw new Error("Invalid request");
     }
     console.log(student);
-    res.send({
+    res.status(200).json({
       status: "success",
       message: "student data",
       data: student,
@@ -80,7 +80,7 @@ const studentUpdateController = async (req, res) => {
 
     await loggedinUser.save();
 
-    res.send({
+    res.status(200).json({
       status: "success",
       message: `${loggedinUser.firstname} profile updated sucessfully`,
       data: loggedinUser,
@@ -99,7 +99,7 @@ const studentUpdatePasswordController = async (req, res) => {
     console.log(loggedInStudent);
 
     if (!loggedInStudent.password) {
-      throw new Error("Student password not found");
+      throw new Error("Password not found");
     }
 
     const passwordIsAMatch = await bcrypt.compare(
@@ -138,7 +138,7 @@ const studentDeleteController = async (req, res) => {
         message: "Student not found",
       });
     } 
-    res.status(200).json({
+    res.status(204).json({
       status: "success",
       message: "Student deleted successfully",
       data: `${deletedStudent.firstname}'s account is deleted`,
