@@ -7,7 +7,7 @@ const {studentsController, studentController, studentUpdateController, studentDe
 studentRouter.get("/students", auth,  studentsController);
 studentRouter.get("/students/:id", auth, studentController);
 studentRouter.patch("/students/:id", auth, studentUpdateController);
-studentRouter.patch("/students/:id/password", auth, studentUpdatePasswordController);
+studentRouter.patch("/students/:id/resetpassword", auth, studentUpdatePasswordController);
 studentRouter.delete("/students/:id", auth, studentDeleteController);
 
 module.exports = studentRouter;
