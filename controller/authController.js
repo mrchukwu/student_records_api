@@ -55,8 +55,8 @@ const loginController = async (req, res) => {
 
     const isPasswordValid = await bcrypt.compare(password, student.password);
     if (isPasswordValid) {
-      const token = jwt.sign({ _id: student._id }, "TechyJauntProject$12", {
-        expiresIn: "7d",
+      const token = jwt.sign({ _id: student._id }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRATION_TIME,
       });
       res.cookie("token", token, {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

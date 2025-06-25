@@ -5,7 +5,7 @@ const {
   validateStudentUpdatePassword,
 } = require("../utills/validation");
 
-const allStudentsController = async (req, res) => {
+const studentsController = async (req, res) => {
   try {
     const loggedInUser = req.user;
     if (!loggedInUser) {
@@ -13,7 +13,7 @@ const allStudentsController = async (req, res) => {
     }
 
     const page = parseInt(req.query.page) || 1;
-    const limit = 5;
+    const limit = 10;
     const skip = (page - 1) * limit;
 
     const students = await Student.find({}).skip(skip).limit(limit);
@@ -127,12 +127,33 @@ const studentUpdatePasswordController = async (req, res) => {
 
 const studentDeleteController = async (req, res) => {
   try {
-    res.send("Student deleted...");
-  } catch (err) {}
+    const loggedInStudent = req.user;
+    console.log(loggedInStudent);
+
+    const deletedStudent = await Student.findByIdAndDelete(loggedInStudent._id)
+    console.log("deleted student ", deletedStudent);
+    if(!deletedStudent){
+      return res.status(404).json({
+        status: "failed",
+        message: "Student not found",
+      });
+    } 
+    res.status(200).json({
+      status: "success",
+      message: "Student deleted successfully",
+      data: `${deletedStudent.firstname}'s account is deleted`,
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      status: "failed",
+      message: "Error deleting student: " + err.message,
+    });
+  }
 };
 
 module.exports = {
-  allStudentsController,
+  studentsController,
   studentController,
   studentUpdateController,
   studentUpdatePasswordController,
