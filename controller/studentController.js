@@ -5,6 +5,7 @@ const {
   validateStudentUpdatePassword,
 } = require("../utills/validation");
 
+
 const studentsController = async (req, res) => {
   try {
     const loggedInUser = req.user;
