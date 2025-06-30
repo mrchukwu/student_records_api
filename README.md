@@ -18,6 +18,7 @@ POST /signup - Create a new user account
 
 ### Student Operations:
 - GET /students - Get all students (with optional pagination ?page=1)
+- GET /students - Get students count
 - GET /students?page=1 - Pagination query
 - GET /students/:id - Get a specific student by ID
 - PATCH /students/:id - Update student information

@@ -46,8 +46,8 @@
 
 - Student routes:
     - Create Student Schema
-    - Get all students
-    - Get the total number of students
+    - Get all students with details
+    - Get the students count
     - Get the total number of students by status [present, absent, suspended, expelled] (new feature)
     - Get an individual student
     - Update a student
