@@ -1,13 +1,14 @@
 
 const express = require("express");
-const studentRouter = express.Router();
+const router = express.Router();
 const {auth} = require("../middleware/auth");
-const {studentsController, studentController, studentUpdateController, studentDeleteController, studentUpdatePasswordController} =  require("../controller/studentController")
+const {studentsController, studentController, studentUpdateController, studentDeleteController, studentUpdatePasswordController, studentsCountController} =  require("../controller/studentController")
 
-studentRouter.get("/students", auth,  studentsController);
-studentRouter.get("/students/:id", auth, studentController);
-studentRouter.patch("/students/:id", auth, studentUpdateController);
-studentRouter.patch("/students/:id/resetpassword", auth, studentUpdatePasswordController);
-studentRouter.delete("/students/:id", auth, studentDeleteController);
+router.get("/students", auth,  studentsController);
+router.get("/students/count", auth, studentsCountController);
+router.get("/students/:id", auth, studentController);
+router.patch("/students/:id", auth, studentUpdateController);
+router.patch("/students/:id/resetpassword", auth, studentUpdatePasswordController);
+router.delete("/students/:id", auth, studentDeleteController);
 
-module.exports = studentRouter;
+module.exports = router;

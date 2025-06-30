@@ -52,6 +52,29 @@ const studentsController = async (req, res) => {
   }
 };
 
+const studentsCountController = async(req, res) => {
+  try{
+    const loggedInUser = req.user;
+  if (!loggedInUser) {
+    throw new Error("Student not loggedin");
+  }
+  const students = await Student.find({});
+
+  console.log(students);
+  res.status(200).json({
+    status: "success",
+    message: "Student count",
+    data: students.length
+  })
+
+  }catch(err){
+    res.status(401).json({
+      status: "failed",
+      message: err.message || "Students not found",
+    });
+  }
+}
+
 const studentController = async (req, res) => {
   try {
     const student = req.user;
@@ -154,6 +177,7 @@ const studentDeleteController = async (req, res) => {
 
 module.exports = {
   studentsController,
+  studentsCountController,
   studentController,
   studentUpdateController,
   studentUpdatePasswordController,
