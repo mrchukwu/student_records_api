@@ -14,7 +14,10 @@ const signupController = async (req, res) => {
     const existingStudent = await Student.findOne({ email });
 
     if (existingStudent) {
-      throw new Error("Email already exist, use another email or Login");
+      return res.status(409).json({
+        status: "fail",
+        message: "Email already exist, use another email or Login"
+      });
     }
 
     const passwordHashed = await bcrypt.hash(password, 10);
